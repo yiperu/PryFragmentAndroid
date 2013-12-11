@@ -3,9 +3,10 @@ package com.apps4s.pryfragmentandroid;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 
-public class CountryDetailActivity extends Activity {
+public class CountryDetailActivity extends FragmentActivity {
 
 	private String country = "";
 	public static final String COUNTRY = "country";
