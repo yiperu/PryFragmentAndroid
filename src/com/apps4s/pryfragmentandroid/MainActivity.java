@@ -5,7 +5,10 @@ import java.util.Arrays;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,8 +16,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+//import android.support.v4.app.*;
 
-public class MainActivity extends Activity implements OnItemClickListener {
+public class MainActivity extends FragmentActivity implements OnItemClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +47,21 @@ public class MainActivity extends Activity implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> adaptador, View view, int posicion, long arg3) {
 		// TODO Auto-generated method stub
+		
 		String country = (String) adaptador.getItemAtPosition(posicion).toString();
-		Intent intension = new Intent(this, CountryDetailActivity.class);
-		intension.putExtra(CountryDetailActivity.COUNTRY, country);
-		startActivity(intension);
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			//FragmentManager manager = getSupportFragmentManager();
+			android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+			CountryInfoFragment fragment = (CountryInfoFragment)manager.findFragmentById(R.id.fragmentCountryInfo);
+			fragment.loadWebViewContent(country);
+			
+		} else {
+			Intent intension = new Intent(this, CountryDetailActivity.class);
+			intension.putExtra(CountryDetailActivity.COUNTRY, country);
+			startActivity(intension);	
+		}
+		
+		
 		
 		
 	}

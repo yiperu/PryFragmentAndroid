@@ -1,5 +1,6 @@
 package com.apps4s.pryfragmentandroid;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,18 +17,13 @@ public class CountryInfoFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		String country = ((CountryDetailActivity)getActivity()).getCountry();
-		webview.loadUrl("http://es.m.wikipedia.org/wiki/"+country);
-		webview.setWebViewClient(new WebViewClient(){
-
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				// TODO Auto-generated method stub
-				view.loadUrl(url);
-				return true;
-			}
-			
-		});
+		Activity actividad = getActivity();
+		
+		
+		if (actividad instanceof CountryDetailActivity ) {
+			String country = ((CountryDetailActivity)getActivity()).getCountry();
+			loadWebViewContent(country);
+		}
 		
 	}
 
@@ -42,6 +38,20 @@ public class CountryInfoFragment extends Fragment {
 		return view;
 	}
 
+	public void loadWebViewContent(String country) {
+		webview.loadUrl("http://es.m.wikipedia.org/wiki/"+country);
+		webview.setWebViewClient(new WebViewClient(){
+
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				// TODO Auto-generated method stub
+				view.loadUrl(url);
+				return true;
+			}
+			
+		});
+		
+	}
 	/**
 	 * @param args
 	 */
