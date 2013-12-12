@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -20,6 +21,8 @@ import android.widget.SimpleAdapter;
 
 public class MainActivity extends FragmentActivity implements OnItemClickListener {
 
+	String country = " ";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,11 +47,49 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 		return true;
 	}
 
+	
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		
+		boolean landScape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+		MenuItem share = menu.getItem(menu.size() - 1);
+		share.setVisible(landScape);
+		
+		return super.onPrepareOptionsMenu(menu);
+
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		
+	switch (item.getItemId()) {
+		case R.id.action_compartir:
+			if (!country.equals("")) {
+				String url = "http://es.m.wikipedia.org/org/wiki/"+country;
+				String msg = getString(R.string.msg_share, country, url);
+				Intent intent = new Intent();
+				intent.setAction(Intent.ACTION_SEND);
+				intent.putExtra(Intent.EXTRA_TEXT, msg);
+				intent.setType("text/plain");
+				startActivity(Intent.createChooser(intent, getString(R.string.mnu_compartir)));
+			}
+			return true;
+		default:
+			break;
+		}
+		
+		return super.onOptionsItemSelected(item);
+	}
+	
+	
 	@Override
 	public void onItemClick(AdapterView<?> adaptador, View view, int posicion, long arg3) {
 		// TODO Auto-generated method stub
 		
-		String country = (String) adaptador.getItemAtPosition(posicion).toString();
+		country = (String) adaptador.getItemAtPosition(posicion).toString();
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			//FragmentManager manager = getSupportFragmentManager();
 			android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
@@ -60,10 +101,7 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 			intension.putExtra(CountryDetailActivity.COUNTRY, country);
 			startActivity(intension);	
 		}
-		
-		
-		
-		
+				
 	}
 
 }

@@ -6,4 +6,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_country_detail">CountryDetailActivity</string>
 
+    <string name="mnu_ayuda">Ayuda</string>
+    <string name="mnu_adjuntar">Adjuntar</string>
+    <string name="mnu_compartir">Compartir</string>
+    
+    <string name="msg_share" >Te comparto la informacion de %1$s %2$s</string>
+    
 </resources>
